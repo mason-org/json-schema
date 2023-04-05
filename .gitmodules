@@ -1,0 +1,3 @@
+[submodule "mason-registry"]
+	path = mason-registry
+	url = https://github.com/mason-org/mason-registry
