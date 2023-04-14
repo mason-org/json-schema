@@ -1,0 +1,44 @@
+---
+name: Generate bundle
+
+on:
+  schedule:
+    - cron: "0 9 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    name: Generate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          submodules: true
+
+      - name: Update submodules
+        run: git submodule update --remote
+
+      - name: Bundle schema
+        run: |
+          npm install
+          node bundle
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v35
+        with:
+          files: |
+            bundled-schema.json
+
+      - if: ${{ steps.changed-files.outputs.any_changed }}
+        name: Commit and push
+        run: |
+          git config --local user.name "$GITHUB_ACTOR"
+          git config --local user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git commit -am "chore: generate"
+          git push
