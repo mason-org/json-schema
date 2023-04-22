@@ -34,6 +34,8 @@ jobs:
         with:
           files: |
             bundled-schema.json
+          files_ignore: |
+            mason-registry
 
       - if: ${{ steps.changed-files.outputs.any_changed }}
         name: Commit and push
