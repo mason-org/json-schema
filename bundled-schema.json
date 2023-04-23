@@ -42,6 +42,9 @@
     "source": {
       "$ref": "#/definitions/components:source"
     },
+    "schemas": {
+      "$ref": "#/definitions/components:schemas"
+    },
     "bin": {
       "$ref": "#/definitions/components:bin"
     },
@@ -1261,6 +1264,17 @@
           "items": {
             "$ref": "#/definitions/enums:platform"
           }
+        }
+      }
+    },
+    "components:schemas": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "lsp": {
+          "type": "string",
+          "description": "A URL to where the LSP JSON schema can be downloaded from. If the provided URL is a VSCode package.json you MUST prefix the url with vscode:",
+          "pattern": "^(vscode:)?https://"
         }
       }
     },
