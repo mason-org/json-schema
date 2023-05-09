@@ -37,7 +37,7 @@ jobs:
           files_ignore: |
             mason-registry
 
-      - if: ${{ steps.changed-files.outputs.any_changed }}
+      - if: steps.changed-files.outputs.any_changed == 'true'
         name: Commit and push
         run: |
           git config --local user.name "$GITHUB_ACTOR"
