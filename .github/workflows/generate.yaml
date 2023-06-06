@@ -30,14 +30,12 @@ jobs:
 
       - name: Get changed files
         id: changed-files
-        uses: tj-actions/changed-files@v35
+        uses: tj-actions/verify-changed-files@v14
         with:
           files: |
             bundled-schema.json
-          files_ignore: |
-            mason-registry
 
-      - if: steps.changed-files.outputs.any_changed == 'true'
+      - if: steps.changed-files.outputs.files_changed == 'true'
         name: Commit and push
         run: |
           git config --local user.name "$GITHUB_ACTOR"
