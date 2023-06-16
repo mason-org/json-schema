@@ -758,45 +758,81 @@
       ]
     },
     "components:source": {
-      "oneOf": [
+      "allOf": [
         {
-          "$ref": "#/definitions/components:sources:cargo"
+          "type": "object",
+          "properties": {
+            "version_overrides": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "allOf": [
+                  {
+                    "type": "object",
+                    "required": [
+                      "constraint"
+                    ],
+                    "properties": {
+                      "constraint": {
+                        "type": "string",
+                        "pattern": "^semver:(<=)?v?\\d+\\.\\d+\\.\\d+"
+                      }
+                    }
+                  },
+                  {
+                    "$ref": "#/definitions/components:source/definitions/Source"
+                  }
+                ]
+              }
+            }
+          }
         },
         {
-          "$ref": "#/definitions/components:sources:composer"
-        },
-        {
-          "$ref": "#/definitions/components:sources:gem"
-        },
-        {
-          "$ref": "#/definitions/components:sources:generic"
-        },
-        {
-          "$ref": "#/definitions/components:sources:github"
-        },
-        {
-          "$ref": "#/definitions/components:sources:golang"
-        },
-        {
-          "$ref": "#/definitions/components:sources:luarocks"
-        },
-        {
-          "$ref": "#/definitions/components:sources:npm"
-        },
-        {
-          "$ref": "#/definitions/components:sources:nuget"
-        },
-        {
-          "$ref": "#/definitions/components:sources:opam"
-        },
-        {
-          "$ref": "#/definitions/components:sources:pypi"
+          "$ref": "#/definitions/components:source/definitions/Source"
         }
-      ]
+      ],
+      "definitions": {
+        "Source": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/components:sources:cargo"
+            },
+            {
+              "$ref": "#/definitions/components:sources:composer"
+            },
+            {
+              "$ref": "#/definitions/components:sources:gem"
+            },
+            {
+              "$ref": "#/definitions/components:sources:generic"
+            },
+            {
+              "$ref": "#/definitions/components:sources:github"
+            },
+            {
+              "$ref": "#/definitions/components:sources:golang"
+            },
+            {
+              "$ref": "#/definitions/components:sources:luarocks"
+            },
+            {
+              "$ref": "#/definitions/components:sources:npm"
+            },
+            {
+              "$ref": "#/definitions/components:sources:nuget"
+            },
+            {
+              "$ref": "#/definitions/components:sources:opam"
+            },
+            {
+              "$ref": "#/definitions/components:sources:pypi"
+            }
+          ]
+        }
+      }
     },
     "components:sources:cargo": {
       "type": "object",
-      "additionalProperties": false,
       "required": [
         "id"
       ],
@@ -851,7 +887,6 @@
     },
     "components:sources:composer": {
       "type": "object",
-      "additionalProperties": false,
       "required": [
         "id"
       ],
@@ -864,7 +899,6 @@
     },
     "components:sources:gem": {
       "type": "object",
-      "additionalProperties": false,
       "required": [
         "id"
       ],
@@ -901,7 +935,6 @@
     },
     "components:sources:generic:download": {
       "type": "object",
-      "additionalProperties": false,
       "required": [
         "id",
         "download"
@@ -962,7 +995,6 @@
     },
     "components:sources:generic:build": {
       "type": "object",
-      "additionalProperties": false,
       "required": [
         "id",
         "build"
@@ -992,7 +1024,6 @@
       "required": [
         "run"
       ],
-      "additionalProperties": true,
       "properties": {
         "target": {
           "oneOf": [
@@ -1038,7 +1069,6 @@
     },
     "components:sources:github:release": {
       "type": "object",
-      "additionalProperties": false,
       "required": [
         "id",
         "asset"
@@ -1050,30 +1080,6 @@
         },
         "asset": {
           "$ref": "#/definitions/components:sources:github:release/definitions/Asset"
-        },
-        "version_overrides": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "additionalProperties": false,
-            "required": [
-              "constraint",
-              "asset"
-            ],
-            "properties": {
-              "id": {
-                "type": "string",
-                "pattern": "^pkg:github/.+/[^@]+$"
-              },
-              "constraint": {
-                "type": "string",
-                "pattern": "^semver:(<=)?v?\\d+\\.\\d+\\.\\d+"
-              },
-              "asset": {
-                "$ref": "#/definitions/components:sources:github:release/definitions/Asset"
-              }
-            }
-          }
         }
       },
       "definitions": {
@@ -1120,6 +1126,9 @@
             },
             {
               "type": "object",
+              "required": [
+                "file"
+              ],
               "properties": {
                 "file": {
                   "oneOf": [
@@ -1142,7 +1151,6 @@
     },
     "components:sources:github:build": {
       "type": "object",
-      "additionalProperties": false,
       "required": [
         "id",
         "build"
@@ -1169,7 +1177,6 @@
     },
     "components:sources:golang": {
       "type": "object",
-      "additionalProperties": false,
       "required": [
         "id"
       ],
@@ -1189,7 +1196,6 @@
     },
     "components:sources:luarocks": {
       "type": "object",
-      "additionalProperties": false,
       "required": [
         "id"
       ],
@@ -1202,7 +1208,6 @@
     },
     "components:sources:npm": {
       "type": "object",
-      "additionalProperties": false,
       "required": [
         "id"
       ],
@@ -1222,7 +1227,6 @@
     },
     "components:sources:nuget": {
       "type": "object",
-      "additionalProperties": false,
       "required": [
         "id"
       ],
@@ -1235,7 +1239,6 @@
     },
     "components:sources:opam": {
       "type": "object",
-      "additionalProperties": false,
       "required": [
         "id"
       ],
@@ -1248,7 +1251,6 @@
     },
     "components:sources:pypi": {
       "type": "object",
-      "additionalProperties": false,
       "required": [
         "id"
       ],
