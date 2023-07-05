@@ -39,6 +39,9 @@
         "$ref": "#/definitions/enums:category"
       }
     },
+    "deprecation": {
+      "$ref": "#/definitions/components:deprecation"
+    },
     "source": {
       "$ref": "#/definitions/components:source"
     },
@@ -757,6 +760,24 @@
         "Linter",
         "Runtime"
       ]
+    },
+    "components:deprecation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "since",
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "type": "string",
+          "description": "Deprecation message shown to users. Should include alternative installation methods if available."
+        },
+        "since": {
+          "type": "string",
+          "description": "The version number when the deprecation was made."
+        }
+      }
     },
     "components:source": {
       "allOf": [
