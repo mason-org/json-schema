@@ -865,6 +865,9 @@
               "$ref": "#/definitions/components:sources:opam"
             },
             {
+              "$ref": "#/definitions/components:sources:openvsx"
+            },
+            {
               "$ref": "#/definitions/components:sources:pypi"
             }
           ]
@@ -1119,21 +1122,16 @@
           "pattern": "^pkg:github/.+/.+@.+"
         },
         "asset": {
-          "$ref": "#/definitions/components:sources:github:release/definitions/Asset"
-        }
-      },
-      "definitions": {
-        "Asset": {
           "oneOf": [
             {
               "type": "array",
               "items": {
                 "type": "object",
-                "required": [
-                  "target",
-                  "file"
-                ],
                 "additionalProperties": true,
+                "required": [
+                  "file",
+                  "target"
+                ],
                 "properties": {
                   "target": {
                     "oneOf": [
@@ -1166,6 +1164,7 @@
             },
             {
               "type": "object",
+              "additionalProperties": true,
               "required": [
                 "file"
               ],
@@ -1286,6 +1285,101 @@
         "id": {
           "type": "string",
           "pattern": "^pkg:opam/.+@.+"
+        }
+      }
+    },
+    "components:sources:openvsx": {
+      "type": "object",
+      "required": [
+        "id",
+        "download"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^pkg:openvsx/.+/.+@.+"
+        },
+        "download": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": true,
+                "required": [
+                  "file",
+                  "target"
+                ],
+                "properties": {
+                  "target": {
+                    "oneOf": [
+                      {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/definitions/enums:platform"
+                        }
+                      },
+                      {
+                        "$ref": "#/definitions/enums:platform"
+                      }
+                    ]
+                  },
+                  "file": {
+                    "oneOf": [
+                      {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "target_platform": {
+                    "type": "string",
+                    "enum": [
+                      "in32-x64",
+                      "win32-ia32",
+                      "win32-arm64",
+                      "linux-x64",
+                      "linux-arm64",
+                      "linux-armhf",
+                      "alpine-x64",
+                      "alpine-arm64",
+                      "darwin-x64",
+                      "darwin-arm64",
+                      "web",
+                      "universal"
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": true,
+              "required": [
+                "file"
+              ],
+              "properties": {
+                "file": {
+                  "oneOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
         }
       }
     },
